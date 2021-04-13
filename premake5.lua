@@ -20,6 +20,8 @@ IncludeDirs["stb_image"] = "ApexGameEngine/vendor/stb_image/"
 IncludeDirs["Assimp"] = "ApexGameEngine/vendor/Assimp/include/"
 IncludeDirs["irrKlang"] = "ApexGameEngine/vendor/irrKlang/include/"
 IncludeDirs["entt"] = "ApexGameEngine/vendor/entt/single_include/"
+IncludeDirs["lua"] = "ApexGameEngine/vendor/lua/include/"
+
 IncludeDirs["ApexIK"] = "ApexGameEngine/modules/ApexIK/ApexIK/include/"
 
 -- DLLs
@@ -32,7 +34,11 @@ WinLibs = { "opengl32.lib", "assimp-vc142-mtd", "irrKlang" }
 -- WinLibs["Assimp"] = "%{DLLs.Assimp}"
 -- WinLibs["irrKlang"] = "irrKlang"
 
-WinLibDirs = { "ApexGameEngine/vendor/Assimp/build/code/Debug", "ApexGameEngine/vendor/irrKlang/lib" }
+WinLibDirs = {
+	"ApexGameEngine/vendor/Assimp/build/code/Debug",
+	"ApexGameEngine/vendor/irrKlang/lib",
+	"ApexGameEngine/vendor/lua/lib"
+}
 -- WinLibDirs["Assimp"] = "ApexGameEngine/vendor/Assimp/build/code/Debug"
 -- WinLibDirs["irrKlang"] = "ApexGameEngine/vendor/irrKlang/lib"
 
@@ -41,7 +47,11 @@ LinuxLibs = { "GL", "dl", "m", "pthread", "uuid", "assimp", "IrrKlang" }
 -- LinuxLibs["Assimp"] = "assimp"
 -- LinuxLibs["irrKlang"] = "IrrKlang"
 
-LinuxLibDirs = { "ApexGameEngine/vendor/Assimp/build/bin", "ApexGameEngine/vendor/irrKlang/bin/linux-gcc-64" }
+LinuxLibDirs = {
+	"ApexGameEngine/vendor/Assimp/build/bin",
+	"ApexGameEngine/vendor/irrKlang/bin/linux-gcc-64",
+	"ApexGameEngine/vendor/lua/lib"
+}
 -- LinuxLibDirs["Assimp"] = "ApexGameEngine/vendor/Assimp/build/bin"
 -- LinuxLibDirs["irrKlang"] = "ApexGameEngine/vendor/irrKlang/bin/linux-gcc-64"
 
@@ -90,6 +100,7 @@ project "ApexGameEngine"
 		"%{IncludeDirs.Assimp}",
 		"%{IncludeDirs.irrKlang}",
 		"%{IncludeDirs.entt}",
+		"%{IncludeDirs.lua}",
 		-- Modules
 		"%{IncludeDirs.ApexIK}",
 	}
