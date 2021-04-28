@@ -6,9 +6,7 @@ namespace Apex {
 	class ScriptableEntity
 	{
 	public:
-		ScriptableEntity() = default;
-		ScriptableEntity(const ScriptableEntity&) = default;
-		ScriptableEntity(Entity entity, Scene* scene) : m_Entity(entity), m_Scene(scene) {}
+		virtual ~ScriptableEntity() = default;
 		
 		template<typename Component_t>
 		inline decltype(auto) GetComponent()
@@ -16,9 +14,19 @@ namespace Apex {
 			return m_Entity.GetComponent<Component_t>();
 		}
 		
+		template<typename... Component_t>
+		inline decltype(auto) GetComponents()
+		{
+			return m_Entity.GetComponents<Component_t...>();
+		}
+		
+	protected:
+		virtual void OnCreate() {}
+		virtual void OnDestroy() {}
+		virtual void OnUpdate(Timestep ts) {}
+		
 	private:
 		Entity m_Entity;
-		Scene* m_Scene;
 		
 		friend class Scene;
 	};

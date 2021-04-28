@@ -11,7 +11,7 @@ namespace Apex {
 
 	Scene::Scene()
 	{
-		m_Registry.group<TransformComponent, SpriteRendererComponent>();
+		(void)m_Registry.group<TransformComponent, SpriteRendererComponent>();
 	}
 	
 	Entity Scene::CreateEntity(const std::string& name)
@@ -26,17 +26,29 @@ namespace Apex {
 	{
 		// Physics Update
 		// Update Pathfinding
-		// Update AI
+		// Update Scripts
+		{
+			m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
+			{
+				if (!nsc.Instance) {
+					nsc.Instance = nsc.InstantiateScript();
+					nsc.Instance->m_Entity = Entity{ entity, this };
+					nsc.Instance->OnCreate();
+				}
+				nsc.Instance->OnUpdate(ts);
+			});
+		}
+		
 		// Triggers
 		// Sound
-		if (play && Options.PrimaryCamera != entt::null) {
-			auto [camera, transform] = m_Registry.get<CameraComponent, TransformComponent>(Options.PrimaryCamera);
-			Renderer2D::BeginScene(camera.Camera, transform.Transform);
+// 		if (play && Options.PrimaryCamera != entt::null) {
+// 			auto [camera, transform] = m_Registry.get<CameraComponent, TransformComponent>(Options.PrimaryCamera);
+// 			Renderer2D::BeginScene(camera.Camera, transform.Transform);
 			
 			Render2D();
 			
-			Renderer2D::EndScene();
-		}
+// 			Renderer2D::EndScene();
+// 		}
 		// PostProcess
 	}
 	

@@ -76,15 +76,17 @@ namespace Apex {
 	{
 		ScriptableEntity* Instance;
 		
-		std::function<void(Entity, Scene*)> InstantiateFn;
-		std::function<void()> DestroyFn;
+		using InstantiateFn = ScriptableEntity* (*)(void);
+		using DestroyFn = void (*)(NativeScriptComponent*);
 		
-		std::function<void(Timestep)> OnCreateFn;
+		InstantiateFn InstantiateScript;
+		DestroyFn DestroyScript;
 		
 		template<typename Instance_t>
 		void Bind()
 		{
-			
+			InstantiateScript = []() { return static_cast<ScriptableEntity*>(new Instance_t()); };
+			DestroyScript = [](NativeScriptComponent* nsc) { delete nsc->Instance; nsc->Instance = nullptr; };
 		}
 		
 	};

@@ -14,9 +14,9 @@ namespace Apex {
 		Entity(const Entity& other) = default;
 		
 		template<typename Component_t, typename... Args>
-		inline void AddComponent(Args&& ... args)
+		inline Component_t& AddComponent(Args&& ... args)
 		{
-			m_Registry->emplace<Component_t>(m_EntityId, std::forward<Args>(args)...);
+			return m_Registry->emplace<Component_t>(m_EntityId, std::forward<Args>(args)...);
 		}
 		
 		template<typename Component_t>
